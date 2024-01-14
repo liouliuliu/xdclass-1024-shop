@@ -4,6 +4,7 @@ package com.liuhf.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.liuhf.model.AddressDO;
 import com.liuhf.service.AddressService;
+import com.liuhf.util.JsonData;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +33,10 @@ public class AddressController {
     private AddressService addressService;
 
     @GetMapping("find/{address_id}")
-    public Object detail(@ApiParam(value = "地址id", required = true)
+    public JsonData detail(@ApiParam(value = "地址id", required = true)
                          @PathVariable("address_id") long addressId) {
-        return addressService.getOne(new QueryWrapper<AddressDO>().eq("id", addressId));
+        AddressDO address = addressService.getOne(new QueryWrapper<AddressDO>().eq("id", addressId));
+        return JsonData.buildSuccess(address);
     }
 }
 
